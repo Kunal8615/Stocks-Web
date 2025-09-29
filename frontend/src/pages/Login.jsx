@@ -70,7 +70,7 @@ const Login = () => {
           {/* Logo/Brand */}
           <div className="text-center mb-6 sm:mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-              SCRATCHIFY
+            Stock Web
             </h2>
             <p className="text-gray-300 mt-1 sm:mt-2 text-sm sm:text-base">Welcome back! Please login to continue</p>
           </div>
