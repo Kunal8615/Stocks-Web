@@ -8,15 +8,16 @@ dotenv.config();
 const connectDB = async () => {
     try {
         const connectionInstance = await mongoose.connect(
-            `${process.env.MONGO_URI}/${DB_NAME}`, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-        });
+            `${process.env.MONGO_URI}/${DB_NAME}`
+        );
         console.log(`\n Stocks MONGOOSE-DATABASE Connected || db host:
              ${connectionInstance.connection.host}`);
     } catch (error) {
         console.log('Error in MongoDB connection', error);
-        process.exit(1);
+        // Don't exit in production, let the app handle it
+        if (process.env.NODE_ENV !== 'production') {
+            process.exit(1);
+        }
     }
 };
 

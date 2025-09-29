@@ -8,7 +8,7 @@ const app = express()
 app.use(cors({
     origin: ["http://localhost:5173",
         //backend link
-      //  "https://data-cloud-rho.vercel.app"
+       "https://stocks-web-three.vercel.app/"
 
     ],
     credentials: true

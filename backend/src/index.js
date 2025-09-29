@@ -1,15 +1,23 @@
 //16vdgtsZnR2JV263 db
 import connectDB from "./database/index.js";
 import {app} from "../src/app.js"
-connectDB()
-.then(()=>{
-    const port = process.env.PORT || 4000;
-    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-    app.listen(port, () => {
-      console.log(`Server running at ${protocol}://localhost:${port}`);
-    });
-})
-.catch((e) => {
-    console.error(`Error connecting to database: ${e.message}`);
-  });
+const startServer = async () => {
+    try {
+        await connectDB();
+        const port = process.env.PORT || 4000;
+        
+        // For production (Render), bind to 0.0.0.0
+        const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+        
+        app.listen(port, host, () => {
+            console.log(`Server running at http://${host}:${port}`);
+            console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+        });
+    } catch (error) {
+        console.error(`Error starting server: ${error.message}`);
+        process.exit(1);
+    }
+};
+
+startServer();
 
