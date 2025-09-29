@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 // Root route to display a message
 app.get("/", (req, res) => {
-    res.send("Welcome to the DataCloud API! Use the available routes to interact with the platform.");
+    res.send("Welcome to the Stocks APP ! Use the available routes to interact with the platform.");
 });
 //user route
 import userRoute from "../src/routes/user.route.js"
