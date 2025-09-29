@@ -8,7 +8,7 @@ cloud.config({
   api_secret: process.env.CLOUD_API_SECRET 
 });
 
-const uploadOnCloudinary = async (localFilePath) => {
+const uploadonCloundinary = async (localFilePath) => {
   if (!localFilePath) return null;
 
   try {
@@ -47,4 +47,4 @@ const uploadOnCloudinary = async (localFilePath) => {
   }
 };
 
-export { uploadOnCloudinary };
+export { uploadonCloundinary };
