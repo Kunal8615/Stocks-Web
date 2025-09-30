@@ -37,6 +37,8 @@ function Header() {
         credentials: 'include',
       });
       if (response) {
+        // Clear the auth token from localStorage
+        localStorage.removeItem('authToken');
         navigate('/'); 
       } else {
         throw new Error('Logout failed');

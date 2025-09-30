@@ -36,6 +36,11 @@ const Login = () => {
       }
 
       const role = response?.data?.data?.user?.role;
+      
+      // Store the token in localStorage
+      if (response?.data?.token) {
+        localStorage.setItem('authToken', response.data.token);
+      }
 
       // If user selected Admin tab but account is not admin
       if (loginType === 'admin' && role !== 'admin') {

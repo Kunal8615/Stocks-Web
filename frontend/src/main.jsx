@@ -11,6 +11,10 @@ import Stocks from './pages/Stocks.jsx';
 import AddMoney from './pages/addMoney.jsx';
 import CreateStock from './pages/createStock.jsx';
 import SearchStock from './pages/stockUpdate.jsx';
+
+// Import axios config to initialize interceptors
+import './utils/axiosConfig.js';
+
 const route = createBrowserRouter([
   { path: '/', element: <Login/> },
   { path: '/signup', element: <SignUp/> },
