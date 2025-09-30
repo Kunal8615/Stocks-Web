@@ -1,17 +1,11 @@
 import axios from 'axios';
 import { API_URL } from '../constant';
 
-// Create axios instance with base URL
-const axiosInstance = axios.create({
-  baseURL: API_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+// Apply interceptors to global axios instance
+// This ensures ALL axios requests use these interceptors
 
-// Request interceptor - add auth token to requests
-axiosInstance.interceptors.request.use(
+// Request interceptor - add auth token to ALL requests
+axios.interceptors.request.use(
   (config) => {
     // Get token from localStorage if it exists
     const token = localStorage.getItem('authToken');
@@ -26,7 +20,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response interceptor - handle token refresh and errors
-axiosInstance.interceptors.response.use(
+axios.interceptors.response.use(
   (response) => {
     // If response includes a new token, save it
     if (response.data?.token) {
@@ -67,5 +61,14 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+// Create axios instance with base URL (for convenience)
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 export default axiosInstance;
