@@ -6,7 +6,7 @@ const startServer = async () => {
         await connectDB();
         const port = process.env.PORT || 4000;
         
-        // For production (Render), bind to 0.0.0.0
+       
         const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
         
         app.listen(port, host, () => {
