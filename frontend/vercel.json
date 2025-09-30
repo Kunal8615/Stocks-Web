@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/v4",
+        "destination": "https://stocks-web-lfry.vercel.app/api/v4"
+      }
+    ]
+  }
