@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {upload} from "../middleware/multer.middleware.js"
+
 import Verifyjwt from "../middleware/auth.middleware.js"
 
 import {invested ,returns,current_value,wallet_balance}from "../controllers/dashboard.controller.js"
