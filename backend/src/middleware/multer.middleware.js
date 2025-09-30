@@ -1,14 +1,22 @@
+// backend/src/middleware/multer.middleware.js
 import multer from "multer";
 import fs from "fs";
-import path from "path";
 
-// Ensure temp folder exists
-const tempDir = path.join(process.cwd(), "public/temp");
-if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
+const dir = "/tmp/uploads"; 
+
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, tempDir),
-  filename: (req, file, cb) => cb(null, file.originalname),
+  destination: function (req, file, cb) {
+    cb(null, dir);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 
-export const upload = multer({ storage });
+const upload = multer({ storage });
+
+export default upload;
