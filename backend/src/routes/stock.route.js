@@ -8,11 +8,11 @@ const router = Router();
 
 router.use(Verifyjwt, upload.none());
 
-router.post("/createStock", createStock);
-router.post("/buyStock", buy_stock);
-router.post("/update_stock", update_stock);
-router.get("/getStockDetail", getStockDetail);
-router.get("/getAllStocks", getAllStocks);
+router.post("/createStock", verifyJWT,createStock);
+router.post("/buyStock",verifyJWT, buy_stock);
+router.post("/update_stock",verifyJWT, update_stock);
+router.get("/getStockDetail", verifyJWT,getStockDetail);
+router.get("/getAllStocks",verifyJWT, getAllStocks);
 router.get("/searchStock",verifyJWT, searchStock);
 
 
