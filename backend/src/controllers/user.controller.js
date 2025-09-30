@@ -123,7 +123,7 @@ const loginUser = asynchandler(async (req,res)=>{
     const option = {
         httpOnly: true,
         sameSite: "None",
-        secure : "true",
+        secure : true,
         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000)
     }
  console.log(loggedUser,"Login Done");

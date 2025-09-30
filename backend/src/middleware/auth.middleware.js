@@ -12,7 +12,10 @@ const verifyJWT = asynchandler(async (req, _, next) => {
         token = req.cookies?.accessToken || req.headers.authorization?.replace("Bearer ", "");
 
         if (!token) {
-            throw new Apierror(401, "Unauthorized request: Token missing");
+           
+            return res.status(401).json(
+                new Apiresponce(401, {}, "Unauthorized request: Token missing")
+            );
         }
 
        
