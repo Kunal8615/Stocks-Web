@@ -157,7 +157,9 @@ const createStock = asynchandler(async (req, res) => {
             name: 1,
             price_per_unit : 1,
             available_quantity : 1,
-            description : 1
+            description : 1,
+            invested_amount : 1,
+            investor_count : 1
           }
         }
       ]);

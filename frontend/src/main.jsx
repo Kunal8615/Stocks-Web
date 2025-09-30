@@ -9,6 +9,7 @@ import Layout from './Layout.jsx';
 import Dashboard from './pages/dashboard.jsx';
 import Stocks from './pages/Stocks.jsx';
 import AddMoney from './pages/addMoney.jsx';
+import CreateStock from './pages/createStock.jsx';
 import SearchStock from './pages/stockUpdate.jsx';
 const route = createBrowserRouter([
   { path: '/', element: <Login/> },
@@ -20,6 +21,7 @@ const route = createBrowserRouter([
       { path: '', element: <Dashboard/> },
       { path: 'stocks', element: <Stocks/> },
       { path: 'add-money', element: <AddMoney/> },
+      { path: 'create-stock', element: <CreateStock/> },
       { path: 'search-stock', element: <SearchStock/> }
     ]
   },

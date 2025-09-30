@@ -207,5 +207,5 @@ const Stocks = () => {
     </div>
   )
 }
-
+/*  invested_amount , investor_count*/
 export default Stocks

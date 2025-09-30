@@ -122,6 +122,14 @@ function Header() {
                 🎟️ Update Stock
               </Link>
             )}
+            {userRole !== 'user' && (
+              <Link 
+                to="/layout/create-stock" 
+                className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              >
+                🎟️ Create Stock
+              </Link>
+            )}
             <Link 
               to="/layout/add-money" 
               className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
@@ -182,6 +190,15 @@ function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 🎟️ Update Stock
+              </Link>
+            )}
+             {userRole !== 'user' && (
+              <Link
+                to="/layout/create-stock"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                🎟️ Create Stock
               </Link>
             )}
             <Link

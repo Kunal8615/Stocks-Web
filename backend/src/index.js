@@ -1,6 +1,6 @@
 //16vdgtsZnR2JV263 db
 import connectDB from "./database/index.js";
-import {app} from "../src/app.js"
+import app from "../src/app.js"
 const startServer = async () => {
     try {
         await connectDB();
