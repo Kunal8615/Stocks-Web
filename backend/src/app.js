@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import connectDB from "./db.js"; // DB connect helper
+import connectDB from "../src/database/index.js"; // DB connect helper
 import verifyJWT from "./middleware/auth.middleware.js";
 
 // Routes
