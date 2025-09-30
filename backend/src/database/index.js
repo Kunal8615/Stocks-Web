@@ -1,24 +1,35 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';  
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import { DB_NAME } from "../contant.js";
 
-import { DB_NAME } from '../contant.js';
+dotenv.config();
 
-dotenv.config();  
+let isConnected = false; // global cached connection
 
 const connectDB = async () => {
-    try {
-        const connectionInstance = await mongoose.connect(
-            `${process.env.MONGO_URI}/${DB_NAME}`
-        );
-        console.log(`\n Stocks MONGOOSE-DATABASE Connected || db host:
-             ${connectionInstance.connection.host}`);
-    } catch (error) {
-        console.log('Error in MongoDB connection', error);
-        // Don't exit in production, let the app handle it
-        if (process.env.NODE_ENV !== 'production') {
-            process.exit(1);
-        }
-    }
+  if (isConnected) {
+    console.log("🔄 Using existing MongoDB connection");
+    return;
+  }
+
+  try {
+    const connectionInstance = await mongoose.connect(
+      `${process.env.MONGO_URI}/${DB_NAME}`,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+
+    isConnected = connectionInstance.connections[0].readyState === 1;
+
+    console.log(
+      `✅ Stocks MONGOOSE-DATABASE Connected || db host: ${connectionInstance.connection.host}`
+    );
+  } catch (error) {
+    console.error("❌ Error in MongoDB connection:", error);
+    // Don't exit in serverless / production
+  }
 };
 
 export default connectDB;
