@@ -37,9 +37,12 @@ const Login = () => {
 
       const role = response?.data?.data?.user?.role;
       
-      // Store the token in localStorage
+      // Store both auth token and refresh token in localStorage
       if (response?.data?.token) {
         localStorage.setItem('authToken', response.data.token);
+      }
+      if (response?.data?.refreshToken) {
+        localStorage.setItem('refreshToken', response.data.refreshToken);
       }
 
       // If user selected Admin tab but account is not admin
