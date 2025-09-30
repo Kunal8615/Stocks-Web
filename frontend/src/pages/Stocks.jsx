@@ -83,7 +83,7 @@ const Stocks = () => {
       const json = await res.json()
       if (!json.success) throw new Error(json.message || 'Failed to buy stock')
       alert(`Bought successfully: ${json?.data?.stock?.name || 'Stock'}`)
-      navigate('/layout/stocks')
+      loadStocks(); // Refresh stocks list after buying
     } catch (e) {
       alert(e?.message || 'Failed to buy stock')
     }
@@ -114,14 +114,14 @@ const Stocks = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search stock (e.g. tata)"
-            className="flex-1 border border-gray-600 rounded-md px-3 py-2 bg-black text-white"
+            className="flex-1 border border-gray-600 rounded-md px-3 py-2 bg-black text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
         {(loading || isSearching) ? (
-          <p className="text-gray-400 mt-6">Loading...</p>
+          <p className="text-gray-400 mt-6 text-center">Loading Stocks...</p>
         ) : error ? (
-          <p className="text-red-400 mt-6">{error}</p>
+          <p className="text-red-400 mt-6 text-center">{error}</p>
         ) : (
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {stocks.map((s) => {
@@ -130,15 +130,14 @@ const Stocks = () => {
               const price = s?.price_per_unit ?? d?.price_per_unit ?? 0
               const isActive = activeStockId === s._id
 
+              // *** YAHAN NEW FIELDS KA DATA ACCESS KIYA HAI ***
+              const investedAmount = s?.invested_amount ?? d?.invested_amount
+              const investorCount = s?.investor_count ?? d?.investor_count
+
               return (
                 <div
                   key={s._id}
                   className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-gray-900/60 to-gray-900/30 cursor-pointer"
-                  onMouseEnter={() => {
-                    setActiveStockId(s._id)
-                    ensureDetails(s._id)
-                  }}
-                  onMouseLeave={() => setActiveStockId(null)}
                   onClick={(e) => {
                     if (e.target.closest('.buy-overlay')) return
                     setActiveStockId(isActive ? null : s._id)
@@ -160,14 +159,35 @@ const Stocks = () => {
                       </span>
                     </div>
 
-                    {availableQty !== undefined && (
-                      <div className="mt-3 flex items-center gap-2">
-                        <span className="text-xs text-gray-400">Available</span>
-                        <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs text-gray-100">
-                          {availableQty}
-                        </span>
-                      </div>
-                    )}
+                    {/* *** YAHAN NEW FIELDS KO RENDER KIYA HAI *** */}
+                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                      {availableQty !== undefined && (
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-400">Available</span>
+                          <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs text-gray-100">
+                            {availableQty}
+                          </span>
+                        </div>
+                      )}
+
+                      {investedAmount !== undefined && (
+                         <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-400">Invested</span>
+                          <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs text-gray-100">
+                           ₹{Number(investedAmount).toLocaleString('en-IN')}
+                          </span>
+                        </div>
+                      )}
+
+                      {investorCount !== undefined && (
+                         <div className="flex items-center gap-2">
+                          <span className="text-xs text-gray-400">Investors</span>
+                          <span className="inline-flex items-center rounded-full bg-white/10 px-2.5 py-1 text-xs text-gray-100">
+                            {investorCount}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {/* Buy overlay */}
@@ -207,5 +227,5 @@ const Stocks = () => {
     </div>
   )
 }
-/*  invested_amount , investor_count*/
+
 export default Stocks

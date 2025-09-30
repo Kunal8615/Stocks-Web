@@ -42,51 +42,58 @@ const createStock = asynchandler(async (req, res) => {
 
   const buy_stock = asynchandler(async (req, res) => {
     try {
-      const user = await User.findById(req.user._id);
-      const { stockid, total_unit } = req.body;
-  
-      const stock = await Stock.findById(stockid);
-      if (!stock) {
-        throw new Apierror(404, "Stock not found in DB");
+      if (!req.user || !req.user._id) {
+        return res.status(401).json({ success: false, message: 'User not logged in' })
       }
   
-      const pay = total_unit * stock.price_per_unit;
+      const user = await User.findById(req.user._id)
+      if (!user) return res.status(404).json({ success: false, message: 'User not found' })
+  
+      let { stockid, total_unit } = req.body
+      if (!stockid) return res.status(400).json({ success: false, message: 'stockid is required' })
+      total_unit = Number(total_unit)
+      if (!total_unit || total_unit <= 0) {
+        return res.status(400).json({ success: false, message: 'Invalid total_unit' })
+      }
+  
+      const stock = await Stock.findById(stockid)
+      if (!stock) return res.status(404).json({ success: false, message: 'Stock not found' })
+  
+      const pay = total_unit * stock.price_per_unit
   
       // Balance check
       if (pay > user.wallet_money) {
-        window.alert ("Insufficient balance in Virtual Wallet")
-        throw new Apierror(401, "Insufficient balance in Virtual Wallet");
+        return res.status(400).json({ success: false, message: 'Insufficient balance in wallet' })
       }
   
       // Stock availability check
       if (total_unit > stock.available_quantity) {
-        throw new Apierror(400, "Not enough stock available");
+        return res.status(400).json({ success: false, message: 'Not enough stock available' })
       }
   
       // Update user
-      user.wallet_money -= pay;
-      user.total_invested += pay;
-      user.stocks.push({ stock: stockid, quantity: total_unit });
-      await user.save();
+      user.wallet_money -= pay
+      user.total_invested += pay
+      user.stocks.push({ stock: stockid, quantity: total_unit })
+      await user.save()
   
       // Update stock
-      stock.available_quantity -= total_unit;
-      stock.invested_amount += pay;
-      stock.investor_count += 1;
-      await stock.save();
+      stock.available_quantity -= total_unit
+      stock.invested_amount += pay
+      stock.investor_count += 1
+      await stock.save()
   
-      return res.status(200).json(
-        new Apiresponce(
-          200,
-          { user, stock },
-          `Payment Successful for ${stock.name} by $${user.name}`
-        )
-      );
+      return res.status(200).json({
+        success: true,
+        message: `Payment successful for ${stock.name}`,
+        data: { user, stock }
+      })
+  
     } catch (error) {
-      console.log(error);
-      throw new Apierror(500, "Problem in stock while buying");
+      console.error('buy_stock error:', error)
+      return res.status(500).json({ success: false, message: error.message || 'Problem in stock while buying' })
     }
-  });
+  })
   
   const update_stock = asynchandler(async (req, res) => {
     try {
