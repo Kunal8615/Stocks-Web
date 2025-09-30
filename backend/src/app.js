@@ -20,6 +20,7 @@ const corsOptions = {
     const allowedOrigins = [
         "https://stocks-web-three.vercel.app",
       "http://localhost:5173",
+      "http://localhost:5174",
       "http://localhost:8000"
     ];
     if (allowedOrigins.indexOf(origin) !== -1) {

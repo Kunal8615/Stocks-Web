@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { API_URL } from '../constant'
 import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../utils/axiosConfig'
+import axios from 'axios'
 
 const numberFormatter = (value) => {
   try {
@@ -42,11 +42,11 @@ const Dashboard = () => {
 
       try {
         const [invRes, retRes, curRes, userRes, walRes] = await Promise.all([
-          axiosInstance.get(`/dashboard/invested`),
-          axiosInstance.get(`/dashboard/returns`),
-          axiosInstance.get(`/dashboard/current_value`),
-          axiosInstance.get(`/user/GetCurrentUser`),
-          axiosInstance.get(`/dashboard/wallet_balance`),
+          axios.get(`${API_URL}/dashboard/invested`, { withCredentials: true }),
+          axios.get(`${API_URL}/dashboard/returns`, { withCredentials: true }),
+          axios.get(`${API_URL}/dashboard/current_value`, { withCredentials: true }),
+          axios.get(`${API_URL}/user/GetCurrentUser`, { withCredentials: true }),
+          axios.get(`${API_URL}/dashboard/wallet_balance`, { withCredentials: true }),
         ])
 
         if (!isActive) return
