@@ -45,7 +45,7 @@ const SignUp = () => {
 
       const result = await res.json();
       if (result.success) {
-        navigate("/"); // Redirect to login after successful signup
+        navigate("/"); 
       } else {
         alert("Signup failed ❌");
       }

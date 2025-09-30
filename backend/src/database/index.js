@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-let isConnected = false; // global cached connection
+let isConnected = false; 
 
 const connectDB = async () => {
   if (isConnected) {
@@ -28,7 +28,7 @@ const connectDB = async () => {
     );
   } catch (error) {
     console.error("❌ Error in MongoDB connection:", error);
-    // Don't exit in serverless / production
+
   }
 };
 

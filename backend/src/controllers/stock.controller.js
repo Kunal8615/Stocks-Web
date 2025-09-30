@@ -13,9 +13,7 @@ const createStock = asynchandler(async (req, res) => {
         throw new Apierror(403, "Only admin can list a stock");
       }
   
-      // Extract fields from request body
   
-      // Optional: validate that all required fields exist
       if (!name || !description || !price_per_unit || !available_quantity || !category) {
         throw new Apierror(400, "All stock fields are required");
       }
@@ -127,7 +125,7 @@ const createStock = asynchandler(async (req, res) => {
 
   const getStockDetail = asynchandler(async (req, res) => {
     try {
-      const { stockid } = req.body || req.query   // dono jagah se id aa sakti hai
+      const { stockid } = req.body || req.query   
       
       if (!stockid) {
         return res
