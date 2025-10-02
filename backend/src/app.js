@@ -18,7 +18,7 @@ const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
     const allowedOrigins = [
-        "https://stocks-web-three.vercel.app",
+      "https://stocks-web-three.vercel.app",
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:8000"

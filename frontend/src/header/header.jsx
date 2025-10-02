@@ -16,7 +16,7 @@ function Header() {
           credentials: 'include',
         });
         const data = await res.json();
-        if (data?.statuscode === 200 && data?.data?.role) {
+        if (data?.statuscode == 200 && data?.data?.role) {
           setUserRole(data.data.role);
         } else {
           console.warn('Failed to fetch user role');

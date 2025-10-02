@@ -27,7 +27,7 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        withCredentials: true, // Ensures that cookies are sent with the request
+        withCredentials: true, 
       });
 
 
@@ -38,12 +38,12 @@ const Login = () => {
       const role = response?.data?.data?.user?.role;
       
       // Store both auth token and refresh token in localStorage
-      if (response?.data?.token) {
-        localStorage.setItem('authToken', response.data.token);
-      }
-      if (response?.data?.refreshToken) {
-        localStorage.setItem('refreshToken', response.data.refreshToken);
-      }
+      // if (response?.data?.token) {
+      //   localStorage.setItem('authToken', response.data.token);
+      // }
+      // if (response?.data?.refreshToken) {
+      //   localStorage.setItem('refreshToken', response.data.refreshToken);
+      // }
 
       // If user selected Admin tab but account is not admin
       if (loginType === 'admin' && role !== 'admin') {

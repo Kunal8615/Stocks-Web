@@ -137,7 +137,7 @@ const loginUser = asynchandler(async (req,res)=>{
  return res.status(200)
  .cookie("accessToken", accessToken, option)
  .cookie("refreshToken", refreshToken,option)
- .json(new Apiresponce(200,{user : loggedUser},"User logged in successfully"));
+ .json(new Apiresponce(200,{user : loggedUser,accessToken,refreshToken},"User logged in successfully"));
 })
 
 const getUser = asynchandler(async (req, res) => {
