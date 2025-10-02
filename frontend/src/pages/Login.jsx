@@ -23,27 +23,46 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`${API_URL}/user/login`, credentials, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true, 
-      });
+  //     const response = await axios.post(`${API_URL}/user/login`, credentials, {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       withCredentials: true, 
+  //     });
 
 
-      if (response.status !== 200) {
-        throw new Error('Login failed! Please check your credentials.');
-      }
+  //     if (response.status !== 200) {
+  //       throw new Error('Login failed! Please check your credentials.');
+  //     }
 
-      const role = response?.data?.data?.user?.role;
-      
-      // Store both auth token and refresh token in localStorage
-      // if (response?.data?.token) {
-      //   localStorage.setItem('authToken', response.data.token);
-      // }
-      // if (response?.data?.refreshToken) {
-      //   localStorage.setItem('refreshToken', response.data.refreshToken);
-      // }
+  //  //   const role = response?.data?.data?.user?.role;
+  //     const role = response?.data?.data?.user?.role;
+       
+  //     if (response.data.success) {
+  //       localStorage.setItem("accessToken", response.data.accessToken);
+  //     //  localStorage.setItem("refreshToken", response.data.refreshToken);
+  //   //    localStorage.setItem("user", JSON.stringify(response.data.user)); // user bhi save kar sakta hai
+  //     }
+
+  //new 
+  const response = await axios.post(`${API_URL}/user/login`, credentials, {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true, 
+});
+
+if (response.status !== 200 || !response.data.success) {
+    throw new Error('Login failed! Please check your credentials.');
+}
+
+// Extract API data
+const apiData = response.data.data;
+const role = apiData.user.role;
+
+// Save tokens and user in localStorage
+localStorage.setItem("accessToken", apiData.accessToken);
+localStorage.setItem("refreshToken", apiData.refreshToken);
+localStorage.setItem("user", JSON.stringify(apiData.user));
+  
 
       // If user selected Admin tab but account is not admin
       if (loginType === 'admin' && role !== 'admin') {
