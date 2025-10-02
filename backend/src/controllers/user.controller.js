@@ -121,15 +121,15 @@ const loginUser = asynchandler(async (req,res)=>{
     const {accessToken, refreshToken} = await GenerateAccessAndRefreshTokens(user._id)
     const loggedUser = await User.findById(user._id).select("-password -refreshToken")
     const option = {
-       /*  httpOnly: true,
-        sameSite: "None",
+         httpOnly: true,
+        sameSite: "none",
         secure : true,
-         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000) */
+         expires: new Date(Date.now() + process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000) 
 
-    httpOnly: true,
-    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-    secure: process.env.NODE_ENV === "production",
-    maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
+    // httpOnly: true,
+    // sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+    // secure: process.env.NODE_ENV === "production",
+    // maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000
       
     }
  console.log(loggedUser,"Login Done");
